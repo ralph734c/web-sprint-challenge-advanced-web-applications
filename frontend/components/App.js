@@ -72,14 +72,11 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      await axios
-        .get(articlesUrl, {
-          headers: { Authorization: token },
-        })
-        .then((response) => {
-          setArticles(response.data.articles);
-          setMessage(response.data.message);
-        });
+      const response = await axios.get(articlesUrl, {
+        headers: { Authorization: token },
+      });
+      setArticles(response.data.articles);
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -99,14 +96,11 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      await axios
-        .post(articlesUrl, article, {
-          headers: { Authorization: token },
-        })
-        .then((response) => {
-          setMessage(response.data.message);
-          getArticles();
-        });
+      const response = await axios.post(articlesUrl, article, {
+        headers: { Authorization: token },
+      });
+      await getArticles();
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -124,14 +118,15 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      await axios
-        .put(`${articlesUrl}/${article_id}`, updatedArticle, {
+      const response = await axios.put(
+        `${articlesUrl}/${article_id}`,
+        updatedArticle,
+        {
           headers: { Authorization: token },
-        })
-        .then((response) => {
-          setMessage(response.data.message);
-          getArticles();
-        });
+        }
+      );
+      await getArticles();
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -151,9 +146,8 @@ export default function App() {
       const response = await axios.delete(`${articlesUrl}/${article_id}`, {
         headers: { Authorization: token },
       });
+      await getArticles();
       setMessage(response.data.message);
-      console.log(response)
-      getArticles();
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
