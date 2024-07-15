@@ -38,7 +38,9 @@ export default function ArticleForm({
     // depending on the truthyness of the `currentArticle` prop.
     if (currentArticle) {
       updateArticle({ article_id: currentArticle.article_id, ...values });
-    } else postArticle(values);
+    } else {
+      postArticle(values);
+    }
   };
 
   const isDisabled = () => {

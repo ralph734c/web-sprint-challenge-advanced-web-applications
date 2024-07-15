@@ -7,6 +7,7 @@ export default function Articles({
   getArticles,
   deleteArticle,
   setCurrentArticleId,
+  currentArticleId,
 }) {
   // ✨ where are my props? Destructure them here
 
@@ -18,10 +19,17 @@ export default function Articles({
 
   useEffect(() => {
     // ✨ grab the articles here, on first render only
-    if (token) getArticles();
+    if (token) {
+      getArticles();
+    } else {
+      navigate('/');
+    }
   }, []);
 
-  if (!token) navigate('/');
+  if (!token) {
+    navigate('/');
+    return null;
+  }
 
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions
@@ -40,13 +48,11 @@ export default function Articles({
                 </div>
                 <div>
                   <button
-                    disabled={true}
                     onClick={() => setCurrentArticleId(art.article_id)}
                   >
                     Edit
                   </button>
                   <button
-                    disabled={true}
                     onClick={() => deleteArticle(art.article_id)}
                   >
                     Delete

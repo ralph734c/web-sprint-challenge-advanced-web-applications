@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
 import Articles from './Articles';
 import LoginForm from './LoginForm';
@@ -14,7 +14,8 @@ export default function App() {
   // ✨ MVP can be achieved with these states
   const [message, setMessage] = useState('');
   const [articles, setArticles] = useState([]);
-  const [currentArticleId, setCurrentArticleId] = useState();
+  const [currentArticleId, setCurrentArticleId] = useState(null);
+  const [currentArticle, setCurrentArticle] = useState(null)
   const [spinnerOn, setSpinnerOn] = useState(false);
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -157,6 +158,15 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    if (currentArticleId) {
+      const article = articles.find((art) => art.article_id === currentArticleId)
+      setCurrentArticle(article || null)
+    } else {
+      setCurrentArticle(null)
+    }
+  }, [currentArticleId, articles])
+
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
@@ -187,12 +197,14 @@ export default function App() {
                   postArticle={postArticle}
                   updateArticle={updateArticle}
                   setCurrentArticleId={setCurrentArticleId}
+                  currentArticle={currentArticle}
                 />
                 <Articles
                   articles={articles}
                   getArticles={getArticles}
                   deleteArticle={deleteArticle}
                   setCurrentArticleId={setCurrentArticleId}
+                  currentArticleId={currentArticleId}
                 />
               </>
             }
