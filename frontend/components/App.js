@@ -99,8 +99,8 @@ export default function App() {
       const response = await axios.post(articlesUrl, article, {
         headers: { Authorization: token },
       });
-      getArticles();
       setMessage(response.data.message);
+      getArticles();
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -125,8 +125,8 @@ export default function App() {
           headers: { Authorization: token },
         }
       );
-      getArticles();
       setMessage(response.data.message);
+      getArticles();
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -146,8 +146,8 @@ export default function App() {
       const response = await axios.delete(`${articlesUrl}/${article_id}`, {
         headers: { Authorization: token },
       });
-      getArticles();
       setMessage(response.data.message);
+      getArticles();
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
