@@ -74,8 +74,8 @@ export default function App() {
       const response = await axios.get(articlesUrl, {
         headers: { Authorization: token },
       });
-      setArticles(response.data);
-      setMessage(response.message);
+      setArticles(response.data.articles);
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -99,7 +99,7 @@ export default function App() {
         headers: { Authorization: token },
       });
       getArticles();
-      setMessage(response.message);
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -125,7 +125,7 @@ export default function App() {
         }
       );
       getArticles();
-      setMessage(response.message);
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -146,7 +146,7 @@ export default function App() {
         headers: { Authorization: token },
       });
       getArticles();
-      setMessage(response.message);
+      setMessage(response.data.message);
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
