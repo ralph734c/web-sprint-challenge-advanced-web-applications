@@ -186,13 +186,13 @@ export default function App() {
                 <ArticleForm
                   postArticle={postArticle}
                   updateArticle={updateArticle}
-                  currentArticleId={setCurrentArticleId}
+                  setCurrentArticleId={setCurrentArticleId}
                 />
                 <Articles
                   articles={articles}
                   getArticles={getArticles}
                   deleteArticle={deleteArticle}
-                  currentArticleId={setCurrentArticleId}
+                  setCurrentArticleId={setCurrentArticleId}
                 />
               </>
             }
