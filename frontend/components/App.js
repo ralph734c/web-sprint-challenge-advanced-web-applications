@@ -15,7 +15,7 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [articles, setArticles] = useState([]);
   const [currentArticleId, setCurrentArticleId] = useState(null);
-  const [currentArticle, setCurrentArticle] = useState(null)
+  const [currentArticle, setCurrentArticle] = useState(null);
   const [spinnerOn, setSpinnerOn] = useState(false);
 
   // ✨ Research `useNavigate` in React Router v.6
@@ -72,11 +72,14 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(articlesUrl, {
-        headers: { Authorization: token },
-      });
-      setArticles(response.data.articles);
-      setMessage(response.data.message);
+      await axios
+        .get(articlesUrl, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          setArticles(response.data.articles);
+          setMessage(response.data.message);
+        });
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -96,11 +99,14 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(articlesUrl, article, {
-        headers: { Authorization: token },
-      });
-      setMessage(response.data.message);
-      getArticles();
+      await axios
+        .post(articlesUrl, article, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          setMessage(response.data.message);
+          getArticles();
+        });
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -118,15 +124,14 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(
-        `${articlesUrl}/${article_id}`,
-        article,
-        {
+      await axios
+        .put(`${articlesUrl}/${article_id}`, article, {
           headers: { Authorization: token },
-        }
-      );
-      setMessage(response.data.message);
-      getArticles();
+        })
+        .then((response) => {
+          setMessage(response.data.message);
+          getArticles();
+        });
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -143,11 +148,14 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`${articlesUrl}/${article_id}`, {
-        headers: { Authorization: token },
-      });
-      setMessage(response.data.message);
-      getArticles();
+      await axios
+        .delete(`${articlesUrl}/${article_id}`, {
+          headers: { Authorization: token },
+        })
+        .then((response) => {
+          setMessage(response.data.message);
+          getArticles();
+        });
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
@@ -160,12 +168,14 @@ export default function App() {
 
   useEffect(() => {
     if (currentArticleId) {
-      const article = articles.find((art) => art.article_id === currentArticleId)
-      setCurrentArticle(article || null)
+      const article = articles.find(
+        (art) => art.article_id === currentArticleId
+      );
+      setCurrentArticle(article || null);
     } else {
-      setCurrentArticle(null)
+      setCurrentArticle(null);
     }
-  }, [currentArticleId, articles])
+  }, [currentArticleId, articles]);
 
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
