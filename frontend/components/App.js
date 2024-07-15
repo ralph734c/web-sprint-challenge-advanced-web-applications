@@ -117,7 +117,7 @@ export default function App() {
     }
   };
 
-  const updateArticle = async ({ article_id, article }) => {
+  const updateArticle = async ({ article_id, ...updatedArticle }) => {
     // ✨ implement
     // You got this!
     setMessage('');
@@ -125,7 +125,7 @@ export default function App() {
     try {
       const token = localStorage.getItem('token');
       await axios
-        .put(`${articlesUrl}/${article_id}`, article, {
+        .put(`${articlesUrl}/${article_id}`, updatedArticle, {
           headers: { Authorization: token },
         })
         .then((response) => {
@@ -148,14 +148,12 @@ export default function App() {
     setSpinnerOn(true);
     try {
       const token = localStorage.getItem('token');
-      await axios
-        .delete(`${articlesUrl}/${article_id}`, {
-          headers: { Authorization: token },
-        })
-        .then((response) => {
-          setMessage(response.data.message);
-          getArticles();
-        });
+      const response = await axios.delete(`${articlesUrl}/${article_id}`, {
+        headers: { Authorization: token },
+      });
+      setMessage(response.data.message);
+      console.log(response)
+      getArticles();
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {
