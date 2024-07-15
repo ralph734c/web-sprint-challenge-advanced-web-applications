@@ -41,6 +41,8 @@ export default function ArticleForm({
     } else {
       postArticle(values);
     }
+    setValues(initialFormValues);
+    setCurrentArticleId(null);
   };
 
   const isDisabled = () => {
